@@ -2,19 +2,19 @@ EXECUTABLE = parts
 CXX = g++
 
 all: main.o part1.o part2.o
-	$(CXX) -o $(EXECUTABLE) main.o part1.o part2.o
+	${CXX} -o ${EXECUTABLE} main.o part1.o part2.o
 	
 main.o: main.cpp
-	$(CXX) -c main.cpp
+	${CXX} -c main.cpp
 	
 part1.o: part1.cpp part1.h
-	$(CXX) -c part1.cpp
+	${CXX} -c part1.cpp
 	
 part2.o: part2.cpp part2.h
-	$(CXX) -c part2.cpp
+	${CXX} -c part2.cpp
 
 clean:
-	@rm main.o part1.o part2.o $(EXECUTABLE)
+	@rm main.o part1.o part2.o ${EXECUTABLE}
 	
 help:
 	@echo all clean help
