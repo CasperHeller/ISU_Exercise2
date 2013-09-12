@@ -1,16 +1,23 @@
-SOURCES = time.cpp
-OBJECTS= ${SOURCES:.cpp=.o}
-EXECUTABLE = time
-CXX = g++
+SOURCES=time.cpp
+EXE=time
+CXXFLAGS=-Wall
+CXX=g++
+# Directories containing header files other than /usr/include (-Idir):
+INCLUDES = 
+# Library paths in addition to /usr/lib (-Ldir):
+LFLAGS = 
+# Libraries to link into executable (-lname):
+LIBS =
+OBJECTS=$(SOURCES:.cpp=.o)
+DEPS=$(SOURCES:.cpp=.d)
 
-all: ${OBJECTS}
-	${CXX} -o ${EXECUTABLE} ${OBJECTS}
-	
-%.o: %.cpp
-	${CXX} -c -o $@ $^
+$(EXE): $(DEPS) $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $@ $(OBJECTS) $(LFLAGS) $(LIBS)
 
-clean:
-	@rm ${OBJECTS} ${EXECUTABLE}
-	
-help:
-	@echo all clean help ${EXECUTABLE}
+%.d: %.cpp
+	$(CXX) -MT$(@:.d=.o) -MM $(CXXFLAGS) $^ > $@
+
+clean: 
+	@rm $(OBJECTS) ${EXE} $(DEPS)
+
+-include $(DEPS)
